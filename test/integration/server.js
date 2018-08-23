@@ -8545,6 +8545,28 @@ describe('Wallet service', function() {
     });
   });
 
+  describe.only('Sync wallet with grouping block explorer', function() {
+    var server , wallet;
+    beforeEach(function(done) {
+      helpers.createAndJoinWallet(1, 1, function(s, w) {
+        server = s;
+        wallet = w;
+        w.copayers[0].id.should.equal(TestData.copayers[0].id44btc);
+        done();
+      });
+    });
+    it('should create address', function(done) {
+      server.createAddress({}, function(err, address) {
+        server.syncWallet(wallet.id, function(err) {
+console.log('[server.js.8560:err:]',err); //TODO
+          done();
+        });
+      });
+    });
+  });
+
+
+
   describe('BTC & BCH wallets with same seed', function() {
     var server = {},
       wallet = {};
