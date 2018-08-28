@@ -8556,7 +8556,7 @@ describe('Wallet service', function() {
           return true;
         }
         blockchainExplorer.register = sinon.stub().callsArgWith(2, null, null);
-        blockchainExplorer.addAddress = sinon.stub().callsArgWith(2, null, null);
+        blockchainExplorer.addAddresses = sinon.stub().callsArgWith(2, null, null);
         w.copayers[0].id.should.equal(TestData.copayers[0].id44btc);
         done();
       });
@@ -8565,13 +8565,28 @@ describe('Wallet service', function() {
       server.createAddress({}, function(err, address) {
         should.not.exist(err);
         blockchainExplorer.register.calledOnce.should.equal(true);
-        blockchainExplorer.addAddress.calledOnce.should.equal(true);
-        var calls= blockchainExplorer.addAddress.getCalls();
-
-        calls[0].args[1].address.should.equal(address.address);
+        blockchainExplorer.addAddresses.calledOnce.should.equal(true);
+        var calls= blockchainExplorer.addAddresses.getCalls();
+        calls[0].args[1].should.deep.equal([address.address]);
         done();
       });
     });
+
+    it('should create and register a wallet with 2 addresses', function(done) {
+      server.createAddress({}, function(err, address1) {
+        server.createAddress({}, function(err, address2) {
+          should.not.exist(err);
+          blockchainExplorer.register.calledOnce.should.equal(true);
+          blockchainExplorer.addAddresses.calledTwice.should.equal(true);
+          var calls= blockchainExplorer.addAddresses.getCalls();
+
+          // TODO should only sync address 2
+          calls[1].args[1].should.deep.equal([address1.address, address2.address]);
+          done();
+        });
+      });
+    });
+
   });
 
 
