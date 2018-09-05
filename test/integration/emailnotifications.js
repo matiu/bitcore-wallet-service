@@ -86,6 +86,7 @@ describe('Email notifications', function() {
           _readTemplateFile_old.call(emailService, language, filename, cb);
         }
       };
+
       helpers.stubUtxos(server, wallet, [1, 1], function() {
         var txOpts = {
           outputs: [{
