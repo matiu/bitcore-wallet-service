@@ -60,7 +60,7 @@ var config = {
       testnet: {
         provider: 'v8',
         url: 'http://localhost:3000',
-        addressFormat: 'cashaddr',  // copay, cashaddr, or legacy
+        addressFormat: 'copay',  // copay, cashaddr, or legacy
       },
 
     },
