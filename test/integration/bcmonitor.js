@@ -195,7 +195,7 @@ describe('Blockchain monitor', function() {
 
 
 
-  it('should not notify copayers of incoming txs more than once', function(done) {
+  it.only('should not notify copayers of incoming txs more than once', function(done) {
     server.createAddress({}, function(err, address) {
       should.not.exist(err);
 
